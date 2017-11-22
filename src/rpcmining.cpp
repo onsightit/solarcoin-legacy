@@ -30,10 +30,14 @@ Value getsubsidy(const Array& params, bool fHelp)
     }
     else
     {
+        // LoL: NbITS is not used, and GextNextTarget applies to PoST.
         nBits = GetNextTargetRequired(pindexBest, false);
     }
 
-    return (uint64_t)GetProofOfWorkReward(nBestHeight, 0);
+    if (pindexBest->nHeight <= LAST_POW_BLOCK)
+        return (uint64_t)GetProofOfWorkReward(nBestHeight, 0);
+    else
+        return (uint64_t)0;
 }
 
 Value getmininginfo(const Array& params, bool fHelp)

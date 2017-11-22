@@ -1345,6 +1345,18 @@ public:
         printf("\n");
     }
 
+    // DEBUG: added printHeader
+    void printHeader() const
+    {
+        printf("CBlock(hash=%s) CBlockHeader(ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u) headerSize=%u\n",
+            GetHash().ToString().c_str(),
+            nVersion,
+            hashPrevBlock.ToString().c_str(),
+            hashMerkleRoot.ToString().c_str(),
+            nTime, nBits, nNonce,
+            this->GetSerializeSize(SER_BLOCKHEADERONLY, nVersion));
+    }
+
 
     bool DisconnectBlock(CTxDB& txdb, CBlockIndex* pindex);
     bool ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck=false);

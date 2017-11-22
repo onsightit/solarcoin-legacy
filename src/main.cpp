@@ -4206,15 +4206,20 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         }
 
         // we must use CBlocks, as CBlockHeaders won't include the 0x00 nTx count at the end
-        vector<CBlock> vHeaders;
+        // DEBUG: vector<CBlock> vHeaders;
+        vector<CBlockHeader> vHeaders;
         int nLimit = 2000;
         printf("getheaders %d to %s\n", (pindex ? pindex->nHeight : -1), hashStop.ToString().c_str());
         for (; pindex; pindex = pindex->pnext)
         {
             vHeaders.push_back(pindex->GetBlockHeader());
+            // DEBUG: Force break after LAST_POW_BLOCK
+            //if (--nLimit <= 0 || pindex->GetBlockHash() == hashStop || pindex->nHeight == LAST_POW_BLOCK)
             if (--nLimit <= 0 || pindex->GetBlockHash() == hashStop)
                 break;
         }
+        printf("DEBUG: getheaders: nLimit=%d nHeight=%d to pfrom=%s\n", nLimit, pindex->nHeight, pfrom->addr.ToString().c_str());
+        printf("DEBUG: Pushing headers (%s, %u headers) : VHeaders Size\n", strCommand.c_str(), vHeaders.size());
         pfrom->PushMessage("headers", vHeaders);
     }
 

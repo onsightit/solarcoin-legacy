@@ -1477,15 +1477,11 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
     }
 
     CBigNum bnNew(PastDifficultyAverage);
-    printf("DEBUG: bnNew(PastDifficultyAverage): %08x %s\n", bnNew.getuint256().ToString().c_str());
     if (PastRateActualSeconds != 0 && PastRateTargetSeconds != 0) {
         bnNew *= PastRateActualSeconds;
-        printf("DEBUG: bnNew *= PastRateActualSeconds: %08x PastRateActualSeconds: %lu\n", bnNew.GetCompact(), PastRateActualSeconds);
         bnNew /= PastRateTargetSeconds;
-        printf("DEBUG: bnNew /= PastRateTargetSeconds: %08x PastRateTargetSeconds: %lu\n", bnNew.GetCompact(), PastRateTargetSeconds);
     }
     if (bnNew > bnProofOfWorkLimit) {
-        printf("DEBUG: %08x %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
         bnNew = bnProofOfWorkLimit;
     }
 
@@ -4217,12 +4213,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         for (; pindex; pindex = pindex->pnext)
         {
             vHeaders.push_back(pindex->GetBlockHeader());
-            // DEBUG: Force break after LAST_POW_BLOCK
-            if (--nLimit <= 0 || pindex->GetBlockHash() == hashStop || pindex->nHeight == LAST_POW_BLOCK)
+            if (--nLimit <= 0 || pindex->GetBlockHash() == hashStop)
                 break;
         }
-        printf("DEBUG: getheaders: nLimit=%d nHeight=%d to pfrom=%s\n", nLimit, pindex->nHeight, pfrom->addr.ToString().c_str());
-        printf("DEBUG: Pushing headers (%s, %u headers) : VHeaders Size\n", strCommand.c_str(), vHeaders.size());
         pfrom->PushMessage("headers", vHeaders);
     }
 
@@ -4580,7 +4573,6 @@ bool ProcessMessages(CNode* pfrom)
 
         // Message size
         unsigned int nMessageSize = hdr.nMessageSize;
-        printf("DEBUG: ProcessMessages(%s, %u bytes) : nMessageSize\n", strCommand.c_str(), nMessageSize);
         if (nMessageSize > MAX_SIZE)
         {
             printf("ProcessMessages(%s, %u bytes) : nMessageSize > MAX_SIZE\n", strCommand.c_str(), nMessageSize);

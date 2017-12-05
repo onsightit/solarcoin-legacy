@@ -1345,7 +1345,7 @@ public:
         printf("\n");
     }
 
-    // DEBUG: added printHeader
+    // 2.1.8+: added printHeader
     void printHeader() const
     {
         printf("CBlock(hash=%s) CBlockHeader(ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u) headerSize=%u\n",
@@ -1479,6 +1479,7 @@ public:
         nNonce         = block.nNonce;
     }
 
+    // TODO: This is pushing a full, initialized block, NOT a header!
     CBlockHeader GetBlockHeader() const
     {
         CBlock block;

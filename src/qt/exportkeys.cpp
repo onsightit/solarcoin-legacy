@@ -172,7 +172,7 @@ void ExportKeys::startRequest(QString a)
     CBitcoinAddress address;
     if (!address.SetString(strAddress))
     {
-        statusText = tr("Invalid Healthcoin address: ").append(strAddress.c_str());
+        statusText = tr("Invalid SolarCoin address: ").append(strAddress.c_str());
         ui->statusLabel->setText(statusText);
         requestAborted = true;
     }

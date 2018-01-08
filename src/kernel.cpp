@@ -324,14 +324,6 @@ bool CheckStakeTimeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsig
     ss << nTimeBlockFrom << nTxPrevOffset << txPrev.nTime << prevout.n << nTimeTx;
     hashProofOfStake = Hash(ss.begin(), ss.end());
 
-    // DEBUG:
-    if (heightBlockFrom <= LAST_POW_BLOCK + 1000) {
-        printf("DEBUG: heightBlockFrom=%d : nStakeModifier=0x%016"PRIx64" nTimeBlockFrom=%u nTxPrevOffset=%u txPrev.nTime=%u prevout.n=%u nTimeTx=%u hashProofOfStake=%s targetProofOfStake=%s\n",
-            heightBlockFrom, nStakeModifier,
-            nTimeBlockFrom, nTxPrevOffset, txPrev.nTime, prevout.n, nTimeTx,
-            hashProofOfStake.ToString().c_str(), targetProofOfStake.ToString().c_str()); // DEBUG: Added targetProofOfStake
-    }
-
     if (fPrintProofOfStake)
     {
         printf("CheckStakeTimeKernelHash() : using modifier 0x%016"PRIx64" at height=%d timestamp=%s for block from height=%d timestamp=%s\n stakeTime=%d, coinDay=%d\n",
@@ -343,7 +335,7 @@ bool CheckStakeTimeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsig
         printf("CheckStakeTimeKernelHash() : check modifier=0x%016"PRIx64" nTimeBlockFrom=%u nTxPrevOffset=%u nTimeTxPrev=%u nPrevout=%u nTimeTx=%u hashProof=%s targetProof=%s\n",
             nStakeModifier,
             nTimeBlockFrom, nTxPrevOffset, txPrev.nTime, prevout.n, nTimeTx,
-            hashProofOfStake.ToString().c_str(), targetProofOfStake.ToString().c_str()); // DEBUG: Added targetProofOfStake
+            hashProofOfStake.ToString().c_str(), targetProofOfStake.ToString().c_str());
     }
 
     // Now check if proof-of-stake hash meets target protocol

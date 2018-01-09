@@ -40,6 +40,7 @@ UninstallDisplayIcon={app}\{#QTexe}
 Compression=lzma2
 SolidCompression=yes
 OutputDir=SETUP
+OutputBaseFilename={#ProgramName}_{#VersionNumber}_32bit
 LicenseFile=SolarCoinEula.rtf
 
 [Dirs]

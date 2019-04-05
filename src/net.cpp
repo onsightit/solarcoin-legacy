@@ -61,7 +61,7 @@ static CNode* pnodeLocalHost = NULL;
 static CNode* pnodeSync = NULL;
 CAddress addrSeenByPeer(CService("0.0.0.0", 0), nLocalServices);
 uint64_t nLocalHostNonce = 0;
-array<int, THREAD_MAX> vnThreadsRunning;
+boost::array<int, THREAD_MAX> vnThreadsRunning;
 static std::vector<SOCKET> vhListenSocket;
 CAddrMan addrman;
 int nMaxConnections = 125;

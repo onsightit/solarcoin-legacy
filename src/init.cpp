@@ -206,7 +206,8 @@ void RestartWallet(const char *parm, bool fOldParms)
         {
             newArgv.removeFirst();
         }
-        newArgv.append(QString("-restart"));
+        if (fRestart)
+            newArgv.append(QString("-restart"));
     }
 
     if ((fOldParms && mapArgs.count("-rescan")))

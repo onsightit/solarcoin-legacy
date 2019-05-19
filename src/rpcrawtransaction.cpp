@@ -230,7 +230,7 @@ Value listunspent(const Array& params, bool fHelp)
 
 Value createrawtransaction(const Array& params, bool fHelp)
 {
-    if (fHelp || params.size() != 2)
+    if (fHelp || params.size() < 2 || params.size() > 3))
         throw runtime_error(
             "createrawtransaction [{\"txid\":txid,\"vout\":n},...] {address:amount,...} [tx-comment]\n"
             "Create a transaction spending given inputs\n"
@@ -250,6 +250,8 @@ Value createrawtransaction(const Array& params, bool fHelp)
     if (params.size() == 3)
     {
         std::string txcomment = params[2].get_str();
+        if (txcomment.substr(0,5).compare("text:") != 0)
+            txcomment = "text:" + txcomment;
         if (txcomment.length() > MAX_TX_COMMENT_LEN_V2)
         {
             txcomment.resize(MAX_TX_COMMENT_LEN_V2);
